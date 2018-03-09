@@ -13,7 +13,7 @@ public class Checktool {
         }
         System.out.println("Test");
 
-        Application application = new Application(args[0],args[2]);
+        Application application = new Application(args[0],args[1]);
 
     }
 }
