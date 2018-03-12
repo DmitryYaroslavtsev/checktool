@@ -15,5 +15,14 @@ public class Checktool {
 
         Application application = new Application(args[0],args[1]);
 
+
+        try {
+            RCApi.openHttpConnection(apiAddress);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

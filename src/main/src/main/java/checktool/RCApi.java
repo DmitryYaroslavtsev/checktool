@@ -1,9 +1,11 @@
 package checktool;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,17 +24,16 @@ public class RCApi {
         this.hostname = hostname;
     }
 
-    void openHttpConnection(String hostname) throws IOException {
-        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-            HttpGet request = new HttpGet(hostname);
-            HttpResponse response = client.execute(request);
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
-            String str = "";
-            while ((str = br.readLine()) != null) {
-                System.out.println(str);
+    static void openHttpConnection(String hostname) throws IOException {
+        try (CloseableHttpClient client = HttpClients.createMinimal()) {
+            HttpGet httpGet = new HttpGet("http://" + hostname);
+            try (CloseableHttpResponse response = client.execute(httpGet)) {
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    throw new AssertionError(response.getStatusLine());
+                }
             }
         }
     }
+
+
 }
