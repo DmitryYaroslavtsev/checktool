@@ -1,5 +1,7 @@
 package checktool;
 
+import org.apache.commons.codec.binary.Base64;
+
 public class Application {
     String key = null;
     String secret = null;
@@ -15,5 +17,9 @@ public class Application {
 
     public String getSecret() {
         return secret;
+    }
+
+    public String httpBasicAuth() {
+        return "Basic " + Base64.encodeBase64(key.getBytes()) + ":" + Base64.encodeBase64(secret.getBytes());
     }
 }

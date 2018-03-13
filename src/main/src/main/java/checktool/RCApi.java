@@ -3,6 +3,7 @@ package checktool;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -33,6 +34,14 @@ public class RCApi {
                 }
             }
         }
+    }
+
+    void authenticate(Application application, UserCredentials userCredentials) throws IOException {
+        try (CloseableHttpClient client = HttpClients.createMinimal()) {
+            //HttpGet httpGet = new HttpGet("http://" + hostname + "/restapi/oauth/token")
+            //        .addHeader();
+        }
+
     }
 
 

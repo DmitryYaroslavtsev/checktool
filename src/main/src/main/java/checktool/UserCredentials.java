@@ -10,4 +10,9 @@ public class UserCredentials {
         this.extension = extension;
         this.password = password;
     }
+
+    UserCredentials(String phoneNumber, String password) {
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
 }
