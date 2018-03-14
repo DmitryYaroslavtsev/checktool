@@ -38,8 +38,8 @@ public class RCApi {
 
     void authenticate(Application application, UserCredentials userCredentials) throws IOException {
         try (CloseableHttpClient client = HttpClients.createMinimal()) {
-            //HttpGet httpGet = new HttpGet("http://" + hostname + "/restapi/oauth/token")
-            //        .addHeader();
+            HttpGet httpGet = new HttpGet("http://" + hostname + "/restapi/oauth/token")
+                   .addHeader("Authorization", application.httpBasicAuth());
         }
 
     }

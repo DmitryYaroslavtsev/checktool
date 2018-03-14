@@ -1,10 +1,13 @@
 package checktool;
 
+import java.io.IOException;
+
 public class Checktool {
     public static void main(String[] args) {
         System.out.println("Init");
 
         String apiAddress = "api.ops.ringcentral.com";
+        apiAddress = "api.ringcentral.com";
 
         //User Credentials
         if (args.length == 0) {
@@ -14,6 +17,15 @@ public class Checktool {
         System.out.println("After verification of args");
 
         Application application = new Application(args[0],args[1]);
+        UserCredentials userCredentials = new UserCredentials(args[2], args[3], args[4]);
+
+        RCApi rcApi = new RCApi(application, userCredentials, apiAddress);
+
+        try {
+            rcApi.openHttpConnection(apiAddress);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         try {
