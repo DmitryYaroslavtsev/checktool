@@ -20,6 +20,6 @@ public class Application {
     }
 
     public String httpBasicAuth() {
-        return "Basic " + Base64.encodeBase64(key.getBytes()) + ":" + Base64.encodeBase64(secret.getBytes());
+        return "Basic " + Base64.encodeBase64String((key + ":" + secret).getBytes());
     }
 }
