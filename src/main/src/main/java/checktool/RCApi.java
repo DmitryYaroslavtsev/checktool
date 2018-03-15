@@ -38,8 +38,31 @@ public class RCApi {
 
     void authenticate(Application application, UserCredentials userCredentials) throws IOException {
         try (CloseableHttpClient client = HttpClients.createMinimal()) {
-            HttpGet httpGet = new HttpGet("http://" + hostname + "/restapi/oauth/token")
-                   .addHeader("Authorization", application.httpBasicAuth());
+            HttpGet httpGet = new HttpGet("http://" + hostname + "/restapi/oauth/token");
+            httpGet.addHeader("Authorization", application.httpBasicAuth());
+            httpGet.addHeader("Accept", "application/json");
+            httpGet.addHeader("Content-type", "application/x-www-form-urlencoded");
+
+            try (CloseableHttpResponse response = client.execute(httpGet)) {
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    throw new AssertionError(response.getStatusLine());
+                }
+
+                BufferedReader br = new BufferedReader(
+                        new InputStreamReader(
+                                response.getEntity().getContent()));
+
+                StringBuffer result = new StringBuffer();
+                String line  = "";
+                while ((line = br.readLine()) != null) {
+                    result.append(line);
+                }
+
+                System.out.println(result.toString());
+            }
+
+
+
         }
 
     }

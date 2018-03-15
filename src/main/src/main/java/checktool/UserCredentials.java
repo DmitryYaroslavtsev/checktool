@@ -13,6 +13,7 @@ public class UserCredentials {
 
     UserCredentials(String phoneNumber, String password) {
         this.phoneNumber = phoneNumber;
+        this.extension = "101";
         this.password = password;
     }
 }

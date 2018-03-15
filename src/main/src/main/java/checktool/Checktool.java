@@ -7,7 +7,7 @@ public class Checktool {
         System.out.println("Init");
 
         String apiAddress = "api.ops.ringcentral.com";
-        apiAddress = "api.ringcentral.com";
+        //apiAddress = "api.ringcentral.com";
 
         //User Credentials
         if (args.length == 0) {
@@ -17,24 +17,14 @@ public class Checktool {
         System.out.println("After verification of args");
 
         Application application = new Application(args[0],args[1]);
-        UserCredentials userCredentials = new UserCredentials(args[2], args[3], args[4]);
+        UserCredentials userCredentials = new UserCredentials(args[2], args[3]);
 
         RCApi rcApi = new RCApi(application, userCredentials, apiAddress);
 
         try {
-            rcApi.openHttpConnection(apiAddress);
+            rcApi.authenticate(application,userCredentials);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        try {
-            RCApi.openHttpConnection(apiAddress);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
     }
 }
