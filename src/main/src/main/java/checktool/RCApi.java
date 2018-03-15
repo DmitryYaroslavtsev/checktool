@@ -1,16 +1,16 @@
 package checktool;
 
-import org.apache.http.HttpResponse;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,6 +24,8 @@ public class RCApi {
     String port = null;
     Application application = null;
     UserCredentials userCredentials = null;
+
+    ObjectMapper objectMapper = new ObjectMapper();
 
     RCApi(Application application, UserCredentials user, String hostname){
         this.application = application;
@@ -62,24 +64,11 @@ public class RCApi {
                     throw new AssertionError(response.getStatusLine());
                 }
 
-                BufferedReader br = new BufferedReader(
-                        new InputStreamReader(
-                                response.getEntity().getContent()));
+                JsonNode node = objectMapper.readTree(
+                        EntityUtils.toString(response.getEntity()));
 
-                StringBuffer result = new StringBuffer();
-                String line  = "";
-                while ((line = br.readLine()) != null) {
-                    result.append(line);
-                }
-
-                System.out.println(result.toString());
+                System.out.println(node);
             }
-
-
-
         }
-
     }
-
-
 }
