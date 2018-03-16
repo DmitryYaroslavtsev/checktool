@@ -11,10 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +23,8 @@ public class RCApi {
     UserCredentials userCredentials = null;
 
     ObjectMapper objectMapper = new ObjectMapper();
+
+    OAuthToken oAuthToken = new OAuthToken();
 
     RCApi(Application application, UserCredentials user, String hostname){
         this.application = application;
@@ -64,10 +63,16 @@ public class RCApi {
                     throw new AssertionError(response.getStatusLine());
                 }
 
-                JsonNode node = objectMapper.readTree(
-                        EntityUtils.toString(response.getEntity()));
+                //JsonNode node = objectMapper.readValue(
+                //        response.getEntity().getContent(), JsonNode.class);
 
-                System.out.println(node);
+
+                oAuthToken = objectMapper.readValue(
+                        response.getEntity().getContent(),OAuthToken.class);
+
+
+
+                System.out.println();
             }
         }
     }
