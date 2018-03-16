@@ -28,6 +28,14 @@ public class RCApi {
         this.application = application;
         this.userCredentials = user;
         this.hostname = hostname;
+
+        try {
+            authenticate(application, userCredentials);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     static void openHttpConnection(String hostname) throws IOException {
@@ -60,10 +68,6 @@ public class RCApi {
                 if (response.getStatusLine().getStatusCode() != 200) {
                     throw new AssertionError(response.getStatusLine());
                 }
-
-                //JsonNode node = objectMapper.readValue(
-                //        response.getEntity().getContent(), JsonNode.class);
-
 
                 oAuthToken = objectMapper.readValue(
                         response.getEntity().getContent(),OAuthToken.class);

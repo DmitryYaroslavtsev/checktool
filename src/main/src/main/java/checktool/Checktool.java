@@ -20,11 +20,5 @@ public class Checktool {
         UserCredentials userCredentials = new UserCredentials(args[2], args[3]);
 
         RCApi rcApi = new RCApi(application, userCredentials, apiAddress);
-
-        try {
-            rcApi.authenticate(application,userCredentials);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
