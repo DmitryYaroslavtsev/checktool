@@ -1,6 +1,5 @@
 package checktool;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -10,21 +9,20 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RCApi {
 
-    String hostname = null;
-    String port = null;
-    Application application = null;
-    UserCredentials userCredentials = null;
+    private String hostname = null;
+    private String port = null;
+    private Application application = null;
+    private UserCredentials userCredentials = null;
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
-    OAuthToken oAuthToken = new OAuthToken();
+    private OAuthToken oAuthToken = new OAuthToken();
 
     RCApi(Application application, UserCredentials user, String hostname){
         this.application = application;
