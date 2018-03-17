@@ -1,7 +1,5 @@
 package checktool;
 
-import java.io.IOException;
-
 public class Checktool {
     public static void main(String[] args) {
         System.out.println("Init");

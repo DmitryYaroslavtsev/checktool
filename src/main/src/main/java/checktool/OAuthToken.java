@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OAuthToken {
     @JsonProperty("access_token")
-    String token = null;
+    String token;
 
-    //String issuedAt = null;
-    //String expiresAt = null;
+    @JsonProperty("expires_in")
+    String expiresAt;
+
+    String issuedAt;
 }

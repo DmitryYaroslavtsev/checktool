@@ -11,6 +11,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RCApi {
@@ -20,9 +21,10 @@ public class RCApi {
     private Application application = null;
     private UserCredentials userCredentials = null;
 
+    Date date = new Date();
     private ObjectMapper objectMapper = new ObjectMapper();
+     AccessToken accessToken = new AccessToken();
 
-    private OAuthToken oAuthToken = new OAuthToken();
 
     RCApi(Application application, UserCredentials user, String hostname){
         this.application = application;
@@ -69,12 +71,10 @@ public class RCApi {
                     throw new AssertionError(response.getStatusLine());
                 }
 
-                oAuthToken = objectMapper.readValue(
-                        response.getEntity().getContent(),OAuthToken.class);
-
-
-
-                System.out.println();
+                accessToken = objectMapper.readValue(
+                        response.getEntity().getContent(),AccessToken.class);
+                accessToken.issuedAt = date.toString();
+                accessToken.expiresAt += accessToken.issuedAt;
             }
         }
     }
