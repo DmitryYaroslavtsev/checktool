@@ -16,19 +16,18 @@ import java.util.List;
 
 public class RCApi {
 
-    private String hostname = null;
-    private String port = null;
-    private Application application = null;
-    private UserCredentials userCredentials = null;
+    private String hostname;
+    private Application application;
+    private UserCredentials userCredentials;
 
-    Date date = new Date();
+    private Date date = new Date();
     private ObjectMapper objectMapper = new ObjectMapper();
-    AccessToken accessToken = new AccessToken();
+    private AccessToken accessToken = new AccessToken();
 
 
-    RCApi(Application application, UserCredentials user, String hostname){
+    RCApi(Application application, UserCredentials userCredentials, String hostname){
         this.application = application;
-        this.userCredentials = user;
+        this.userCredentials = userCredentials;
         this.hostname = hostname;
 
         try {
@@ -73,10 +72,9 @@ public class RCApi {
 
                 accessToken = objectMapper.readValue(
                         response.getEntity().getContent(),AccessToken.class);
-                accessToken.issuedAt = String.valueOf(date.getTime());
+                accessToken.issuedAt = date.getTime();
 
-                accessToken.expiresAt = String.valueOf(Long.parseLong(accessToken.expiresAt)*1000
-                        + Long.parseLong(accessToken.issuedAt));
+                accessToken.expiresAt = accessToken.expiresAt*1000 + accessToken.issuedAt;
 
             }
         }
