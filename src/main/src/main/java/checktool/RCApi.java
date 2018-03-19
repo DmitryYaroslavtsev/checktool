@@ -23,7 +23,7 @@ public class RCApi {
 
     Date date = new Date();
     private ObjectMapper objectMapper = new ObjectMapper();
-     AccessToken accessToken = new AccessToken();
+    AccessToken accessToken = new AccessToken();
 
 
     RCApi(Application application, UserCredentials user, String hostname){
