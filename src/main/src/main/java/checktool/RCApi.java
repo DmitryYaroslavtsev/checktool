@@ -73,8 +73,11 @@ public class RCApi {
 
                 accessToken = objectMapper.readValue(
                         response.getEntity().getContent(),AccessToken.class);
-                accessToken.issuedAt = date.toString();
-                accessToken.expiresAt += accessToken.issuedAt;
+                accessToken.issuedAt = String.valueOf(date.getTime());
+
+                accessToken.expiresAt = String.valueOf(Long.parseLong(accessToken.expiresAt)*1000
+                        + Long.parseLong(accessToken.issuedAt));
+
             }
         }
     }
