@@ -1,5 +1,6 @@
 package checktool;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -22,7 +23,9 @@ public class RCApi {
 
     private Date date = new Date();
     private ObjectMapper objectMapper = new ObjectMapper();
-    private AccessToken accessToken = new AccessToken();
+    AccessToken accessToken = new AccessToken();
+
+    private JsonNode jsonNode;
 
 
     RCApi(Application application, UserCredentials userCredentials, String hostname){
@@ -78,5 +81,49 @@ public class RCApi {
 
             }
         }
+    }
+
+//    there is obsolete grant_type
+    void refreshToken() throws IOException {
+        try (CloseableHttpClient client = HttpClients.createMinimal()) {
+            HttpPost httpPost = new HttpPost("http://" + hostname + "/restapi/oauth/token");
+
+            httpPost.addHeader("Authorization", application.httpBasicAuth());
+            httpPost.addHeader("Accept", "application/json");
+            httpPost.addHeader("Content-type", "application/x-www-form-urlencoded");
+
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("grant_type", "refresh_token"));
+            params.add(new BasicNameValuePair("refresh_token", accessToken.refreshToken));
+
+            try (CloseableHttpResponse response = client.execute(httpPost)) {
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    throw new AssertionError(response.getStatusLine());
+                }
+
+                accessToken = objectMapper.readValue(
+                        response.getEntity().getContent(),AccessToken.class);
+                accessToken.issuedAt = date.getTime();
+
+                accessToken.expiresAt = accessToken.expiresAt*1000 + accessToken.issuedAt;
+
+            }
+        }
+    }
+
+    JsonNode get(String path) throws IOException {
+        try (CloseableHttpClient client = HttpClients.createMinimal()) {
+            HttpGet httpGet = new HttpGet("http://" + hostname + path + "?");
+
+            httpGet.addHeader("Authorization", "Bearer " + accessToken.token);
+            try (CloseableHttpResponse response = client.execute(httpGet)) {
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    throw new AssertionError(response.getStatusLine());
+                }
+
+                jsonNode = objectMapper.readTree(response.getEntity().getContent());
+            }
+        }
+        return jsonNode;
     }
 }
