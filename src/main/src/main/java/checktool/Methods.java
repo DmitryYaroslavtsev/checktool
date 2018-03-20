@@ -18,13 +18,16 @@ public class Methods {
 
     static String sendSms(RCApi api, String text, String from, String to) throws IOException {
 
-        String result = "Fail";
-        ObjectMapper objectMapper = new ObjectMapper();
-
         try (CloseableHttpClient client = HttpClients.createMinimal()) {
             HttpPost httpPost = new HttpPost("http://" + api.hostname + "/restapi/v1.0/account/~/extension/~/sms");
 
             httpPost.addHeader("Authorization", "Bearer " + api.accessToken.token);
+            //httpPost.addHeader("Accept", "application/json");
+            httpPost.addHeader("Content-type", "application/json");
+            //httpPost.addHeader("ContentEncoding", "charset=UTF-8");
+
+
+
 
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("from", from));
@@ -35,7 +38,7 @@ public class Methods {
 
             try (CloseableHttpResponse response = client.execute(httpPost)) {
                 if (response.getStatusLine().getStatusCode() != 200) {
-                    return "dd";
+                    return "Failed!";
                 }
                 else {
                     return "OK";
