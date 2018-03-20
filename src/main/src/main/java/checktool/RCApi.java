@@ -21,7 +21,6 @@ public class RCApi {
     private Application application;
     private UserCredentials userCredentials;
 
-    private Date date = new Date();
     private ObjectMapper objectMapper = new ObjectMapper();
     AccessToken accessToken = new AccessToken();
 
@@ -75,8 +74,8 @@ public class RCApi {
 
                 accessToken = objectMapper.readValue(
                         response.getEntity().getContent(),AccessToken.class);
-                accessToken.issuedAt = date.getTime();
 
+                accessToken.issuedAt = System.currentTimeMillis();
                 accessToken.expiresAt = accessToken.expiresAt*1000 + accessToken.issuedAt;
 
             }
@@ -103,8 +102,8 @@ public class RCApi {
 
                 accessToken = objectMapper.readValue(
                         response.getEntity().getContent(),AccessToken.class);
-                accessToken.issuedAt = date.getTime();
 
+                accessToken.issuedAt = System.currentTimeMillis();
                 accessToken.expiresAt = accessToken.expiresAt*1000 + accessToken.issuedAt;
 
             }
