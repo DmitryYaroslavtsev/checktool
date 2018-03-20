@@ -2,7 +2,6 @@ package checktool;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.util.Pair;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -13,13 +12,11 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 public class RCApi {
 
-    private String hostname;
+    String hostname;
     private Application application;
     private UserCredentials userCredentials;
 
@@ -85,6 +82,8 @@ public class RCApi {
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("grant_type", "refresh_token"));
             params.add(new BasicNameValuePair("refresh_token", accessToken.refreshToken));
+
+            httpPost.setEntity(new UrlEncodedFormEntity(params));
 
             try (CloseableHttpResponse response = client.execute(httpPost)) {
                 if (response.getStatusLine().getStatusCode() != 200) {

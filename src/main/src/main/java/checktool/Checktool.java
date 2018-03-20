@@ -1,9 +1,6 @@
 package checktool;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import javafx.util.Pair;
-
-import java.util.HashMap;
 
 public class Checktool {
     public static void main(String[] args) {
@@ -27,6 +24,13 @@ public class Checktool {
         try {
             JsonNode node  = rcApi.get("/restapi/v1.0/account/~/extension");
             System.out.println(node.toString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            System.out.println(Methods.sendSms(rcApi, "test", userCredentials.phoneNumber, userCredentials.phoneNumber));
         }
         catch (Exception e) {
             e.printStackTrace();
