@@ -1,10 +1,13 @@
 package checktool;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.HttpEntityWrapper;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -17,6 +20,8 @@ public class Methods {
 
 
     static String sendSms(RCApi api, String text, String from, String to) throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
 
         try (CloseableHttpClient client = HttpClients.createMinimal()) {
             HttpPost httpPost = new HttpPost("http://" + api.hostname + "/restapi/v1.0/account/~/extension/~/sms");
@@ -34,7 +39,11 @@ public class Methods {
             params.add(new BasicNameValuePair("to", to));
             params.add(new BasicNameValuePair("text", text));
 
-            httpPost.setEntity(new UrlEncodedFormEntity(params));
+            String entity = objectMapper.writeValueAsString(params);
+            System.out.println(entity);
+
+
+            httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(params)));
 
             try (CloseableHttpResponse response = client.execute(httpPost)) {
                 if (response.getStatusLine().getStatusCode() != 200) {
