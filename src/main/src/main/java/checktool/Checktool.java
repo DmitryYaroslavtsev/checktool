@@ -1,7 +1,5 @@
 package checktool;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 public class Checktool {
     public static void main(String[] args) {
         System.out.println("Init");
@@ -22,15 +20,9 @@ public class Checktool {
         RCApi rcApi = new RCApi(application, userCredentials, apiAddress);
 
         try {
-            JsonNode node  = rcApi.get("/restapi/v1.0/account/~/extension");
-            System.out.println(node.toString());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            System.out.println(Methods.sendSms(rcApi, "test", userCredentials.phoneNumber, userCredentials.phoneNumber));
+            System.out.println("rcApi.get: " + rcApi.get("/restapi/v1.0/account/~/extension").toString());
+            System.out.println("sendSms: " + Methods.sendSms(rcApi, "test", userCredentials.phoneNumber, userCredentials.phoneNumber));
+            System.out.println("sendPager: " + Methods.sendPager(rcApi, "test", userCredentials.extension, userCredentials.extension));
         }
         catch (Exception e) {
             e.printStackTrace();

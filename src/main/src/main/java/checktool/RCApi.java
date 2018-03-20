@@ -70,7 +70,6 @@ public class RCApi {
         }
     }
 
-//    there is obsolete grant_type
     void refreshToken() throws IOException {
         try (CloseableHttpClient client = HttpClients.createMinimal()) {
             HttpPost httpPost = new HttpPost("http://" + hostname + "/restapi/oauth/token");
