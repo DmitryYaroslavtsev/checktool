@@ -2,6 +2,7 @@ package checktool;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.util.Pair;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -13,6 +14,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class RCApi {
@@ -39,17 +41,6 @@ public class RCApi {
             e.printStackTrace();
         }
 
-    }
-
-    static void openHttpConnection(String hostname) throws IOException {
-        try (CloseableHttpClient client = HttpClients.createMinimal()) {
-            HttpGet httpGet = new HttpGet("http://" + hostname);
-            try (CloseableHttpResponse response = client.execute(httpGet)) {
-                if (response.getStatusLine().getStatusCode() != 200) {
-                    throw new AssertionError(response.getStatusLine());
-                }
-            }
-        }
     }
 
     void authenticate(Application application, UserCredentials userCredentials) throws IOException {
@@ -125,4 +116,22 @@ public class RCApi {
         }
         return jsonNode;
     }
+
+    //Needed to rewrite
+    JsonNode post(String path) throws IOException {
+        try (CloseableHttpClient client = HttpClients.createMinimal()) {
+            HttpPost httpPost = new HttpPost("http://" + hostname + path);
+
+            httpPost.addHeader("Content-Type", "application/json");
+            try (CloseableHttpResponse response = client.execute(httpPost)) {
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    throw new AssertionError(response.getStatusLine());
+                }
+                jsonNode = objectMapper.readTree(response.getEntity().getContent());
+            }
+        }
+        return jsonNode;
+    }
+
+
 }
