@@ -19,10 +19,14 @@ public class Checktool {
 
         RCApi rcApi = new RCApi(application, userCredentials, apiAddress);
 
+        String testNumber = "12067888831";
+
         try {
             System.out.println("rcApi.get: " + rcApi.get("/restapi/v1.0/account/~/extension").toString());
             System.out.println("sendSms: " + Methods.sendSms(rcApi, "test", userCredentials.phoneNumber, userCredentials.phoneNumber));
             System.out.println("sendPager: " + Methods.sendPager(rcApi, "test", userCredentials.extension, userCredentials.extension));
+            System.out.println("makeRingOut: " + Methods.makeRingOut(rcApi,userCredentials.phoneNumber,testNumber));
+            System.out.println("changeExtension: " + Methods.changeExtension(rcApi));
         }
         catch (Exception e) {
             e.printStackTrace();

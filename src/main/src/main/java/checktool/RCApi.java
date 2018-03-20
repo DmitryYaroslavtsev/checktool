@@ -121,6 +121,8 @@ public class RCApi {
             HttpPost httpPost = new HttpPost("http://" + hostname + path);
 
             httpPost.addHeader("Content-Type", "application/json");
+            httpPost.addHeader("Authorization", "Bearer " + accessToken.token);
+
             try (CloseableHttpResponse response = client.execute(httpPost)) {
                 if (response.getStatusLine().getStatusCode() != 200) {
                     throw new AssertionError(response.getStatusLine());
