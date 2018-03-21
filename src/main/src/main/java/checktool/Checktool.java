@@ -14,8 +14,8 @@ public class Checktool {
         }
         System.out.println("After verification of args");
 
-        Application application = new Application(args[0],args[1]);
-        UserCredentials userCredentials = new UserCredentials(args[2], args[3]);
+        Application application = new Application(args[2],args[3]);
+        UserCredentials userCredentials = new UserCredentials(args[0], args[1]);
 
         RCApi rcApi = new RCApi(application, userCredentials, apiAddress);
 
