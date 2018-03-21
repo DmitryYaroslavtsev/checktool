@@ -19,7 +19,7 @@ public class Checktool {
 
         RCApi rcApi = new RCApi(application, userCredentials, apiAddress);
 
-        String testNumber = "12067888831";
+        String testNumber = "12069604586";
 
         try {
             System.out.println("rcApi.get: " + rcApi.get("/restapi/v1.0/account/~/extension").toString());

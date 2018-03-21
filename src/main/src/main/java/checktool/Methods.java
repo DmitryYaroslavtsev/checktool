@@ -81,7 +81,7 @@ public class Methods {
         }
     }
 
-    static String randomWorld(int length) {
+    static String randomWord(int length) {
         StringBuilder sb = new StringBuilder();
         String AB = "abcdefghijklmnopqrstuvwxyz";
         Random rnd = new Random();
@@ -115,6 +115,6 @@ public class Methods {
     }
 
     static String changeExtension(RCApi api) throws IOException {
-        return setFirstName(api, randomWorld(10));
+        return setFirstName(api, randomWord(10));
     }
 }
