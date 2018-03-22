@@ -22,11 +22,12 @@ public class Checktool {
         String testNumber = "12069604586";
 
         try {
-            System.out.println("rcApi.get: " + rcApi.get("/restapi/v1.0/account/~/extension").toString());
-            System.out.println("sendSms: " + Methods.sendSms(rcApi, "test", userCredentials.phoneNumber, userCredentials.phoneNumber));
-            System.out.println("sendPager: " + Methods.sendPager(rcApi, "test", userCredentials.extension, userCredentials.extension));
-            System.out.println("makeRingOut: " + Methods.makeRingOut(rcApi,userCredentials.phoneNumber,testNumber));
-            System.out.println("changeExtension: " + Methods.changeExtension(rcApi));
+            //System.out.println("rcApi.get: " + rcApi.get("/restapi/v1.0/account/~/extension").toString());
+            //System.out.println("sendSms: " + Methods.sendSms(rcApi, "test", userCredentials.phoneNumber, userCredentials.phoneNumber));
+            //System.out.println("sendPager: " + Methods.sendPager(rcApi, "test", userCredentials.extension, userCredentials.extension));
+            //System.out.println("makeRingOut: " + Methods.makeRingOut(rcApi,userCredentials.phoneNumber,testNumber));
+            //System.out.println("changeExtension: " + Methods.changeExtension(rcApi));
+            //rcApi.refreshToken();
         }
         catch (Exception e) {
             e.printStackTrace();
